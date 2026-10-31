@@ -13,7 +13,7 @@ Use the UART 8N1 protocol to transmit your octet, it will send a start bit (LOW)
 
 ## How to test
 
-Send 8 bit in ui_in considering this is what you wanna send. Put your clock at 50Mhz. Don't change ui_in to often sinc we need to transmit each bit one by one since the baudrate is 115200 you can send one octet every 86.8 us. If you change ui_in during the transmission it will not change anything. 
+Send 8 bit in ui_in considering this is what you wanna send. Put your clock at 50Mhz. Don't change ui_in to often sinc we need to transmit each bit one by one since the baudrate is 115200 you can send one octet every 86.8 us. If you change ui_in during the transmission it will not change anything. By changing uio[0] to HIGH it will send the new ui_in if it's LOW nothing will be sent. After a reset you have to wait one octet (around 90us) before sending. If busy (uo_out[1]) is HIGH you cannot send anything. Please ui_in need to be stable for at least 3 cycle after putting send (uio[0]) to HIGH because during this time send will be synchronized.
 
 ## External hardware
 

@@ -8,7 +8,7 @@ module uart_tx(input clk, input rst, input [7:0] data, input send, output reg tx
     reg [1:0] next_state;
     reg [7:0] data_stock;
     wire enable8;
-    reg post_rst;
+    reg post_rst, synchronizer, send_synchro;
 
     assign enable8= (counterBaud==CLKS_PER_BIT-1);
 
@@ -17,7 +17,7 @@ module uart_tx(input clk, input rst, input [7:0] data, input send, output reg tx
             BitStart: next_state = (counterBaud==CLKS_PER_BIT-1) ? Octet:BitStart;
             Octet : next_state = (counter8==7&counterBaud==CLKS_PER_BIT-1) ? BitEnd:Octet;
             BitEnd: next_state = (counterBaud==CLKS_PER_BIT-1) ? Rest:BitEnd;
-            Rest : next_state = (send|post_rst) ? BitStart:Rest;
+            Rest : next_state = (send_synchro|post_rst) ? BitStart:Rest;
         endcase
     end
 
@@ -28,12 +28,17 @@ module uart_tx(input clk, input rst, input [7:0] data, input send, output reg tx
             counter8<=0;
             data_stock<=8'h00;
             post_rst<=1;
+            send_synchro<=0;
+            synchronizer<=0;
         end
         else if (~busy) begin
             counter8<=0;
             counterBaud<=0;
             data_stock<= data;
             state<=next_state;
+            synchronizer<=send; //2FF synchronizer for send
+            send_synchro<=synchronizer; //2FF synchronizer for send 
+
         end else begin
             counter8<= (~enable8) ? counter8: (counter8==7|state==BitStart) ? 0: counter8+1;
             counterBaud<=(counterBaud==CLKS_PER_BIT-1)? 0:counterBaud+1;

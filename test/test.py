@@ -7,9 +7,13 @@ from cocotb.triggers import RisingEdge, Timer, FallingEdge
 
 BAUD_RATE = 115200
 BIT_CYCLE = int(1e9//BAUD_RATE)
+test = [0x55,0xA3, 0x00, 0xFF, 0x01]
 
 
-@cocotb.test(timeout_time=700, timeout_unit="us")
+TIMEOUT_TIME= (len(test)+1)*90+200
+
+
+@cocotb.test(timeout_time=TIMEOUT_TIME, timeout_unit="us")
 async def test_project(tb):
     tb._log.info("Start")
 
@@ -21,8 +25,8 @@ async def test_project(tb):
     Clock(tb.clk, 20, "ns").start()    
     cocotb.start_soon(give_values(tb))
 
-
     test = [0x55,0xA3, 0x00, 0xFF, 0x01]
+
 
     for k in range(len(test)):    
         result=0
@@ -47,16 +51,19 @@ async def test_project(tb):
 
 async def give_values(tb):
 
+    
+    await FallingEdge(tb.clk)
     tb.rst_n.value = 0
-    tb.ena.value = 1
-    await Timer(25, unit='ns')
+    await FallingEdge(tb.clk)
     tb.rst_n.value = 1
 
-
     test = [0x55,0xA3, 0x00, 0xFF, 0x01]
+
     for k in range(len(test)):
         await FallingEdge(tb.busy)
-        tb.uio_in.value = 1
+        
         tb.ui_in.value = test[k]
-        await Timer(25, unit="ns")
+        tb.uio_in.value = 1
+        await RisingEdge(tb.clk)
+        await FallingEdge(tb.clk)
         tb.uio_in.value = 0
