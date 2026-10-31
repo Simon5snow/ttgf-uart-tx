@@ -10,7 +10,7 @@ BIT_CYCLE = int(1e9//BAUD_RATE)
 test = [0x55,0xA3, 0x00, 0xFF, 0x01]
 
 
-TIMEOUT_TIME= (len(test)+1)*90+200
+TIMEOUT_TIME= (len(test)+2)*int(BIT_CYCLE*0.01)
 
 
 @cocotb.test(timeout_time=TIMEOUT_TIME, timeout_unit="us")
@@ -61,9 +61,10 @@ async def give_values(tb):
 
     for k in range(len(test)):
         await FallingEdge(tb.busy)
+        await FallingEdge(tb.clk)
         
         tb.ui_in.value = test[k]
+        await Timer(BIT_CYCLE//2, unit="ns")
         tb.uio_in.value = 1
-        await RisingEdge(tb.clk)
-        await FallingEdge(tb.clk)
+        await RisingEdge(tb.busy)
         tb.uio_in.value = 0

@@ -44,6 +44,8 @@ module uart_tx(input clk, input rst, input [7:0] data, input send, output reg tx
             counterBaud<=(counterBaud==CLKS_PER_BIT-1)? 0:counterBaud+1;
             state<=next_state;
             post_rst<=(state==BitEnd&counterBaud==CLKS_PER_BIT-1) ? 0:post_rst;
+            synchronizer<=send; //2FF synchronizer for send
+            send_synchro<=synchronizer;
         end
     end
 
