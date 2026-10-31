@@ -16,7 +16,7 @@ module tt_um_Simon5snow (
     input  wire       rst_n     // reset_n - low to reset
 );
   wire rst, old_busy;
-  assign rst=rst_n;
+  assign rst=~rst_n;
 
   uart_tx uart1(.clk(clk), .rst(rst), .data(ui_in), .send(uio_in[0]), .tx(uo_out[0]), .busy(old_busy) );
 
