@@ -27,8 +27,12 @@ module tb ();
   wire VGND = 1'b0;
 `endif
 
+wire tx, busy;
+assign tx=uo_out[0];
+assign busy=uo_out[1];
+
   // Replace tt_um_example with your module name:
-  tt_um_example user_project (
+  tt_um_Simon5snow user_project (
 
       // Include power ports for the Gate Level test:
 `ifdef GL_TEST

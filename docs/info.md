@@ -9,11 +9,11 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+Use the UART 8N1 protocol to transmit your octet, it will send a start bit (LOW) then your octect starting by the LSB than a stop bit (HIGH). The rest level is HIGH. The pin busy is HIGH if it is transmitting else it's LOW. After a reset you have to wait one octet (around 90us) before sending anything. 
 
 ## How to test
 
-Explain how to use your project
+Send 8 bit in ui_in considering this is what you wanna send. Put your clock at 50Mhz. Don't change ui_in to often sinc we need to transmit each bit one by one since the baudrate is 115200 you can send one octet every 86.8 us. If you change ui_in during the transmission it will not change anything. 
 
 ## External hardware
 

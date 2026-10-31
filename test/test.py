@@ -3,38 +3,60 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
+from cocotb.triggers import RisingEdge, Timer, FallingEdge
+
+BAUD_RATE = 115200
+BIT_CYCLE = int(1e9//BAUD_RATE)
 
 
-@cocotb.test()
-async def test_project(dut):
-    dut._log.info("Start")
+@cocotb.test(timeout_time=700, timeout_unit="us")
+async def test_project(tb):
+    tb._log.info("Start")
 
-    # Set the clock period to 10 us (100 KHz)
-    clock = Clock(dut.clk, 10, unit="us")
-    cocotb.start_soon(clock.start())
+    # Set the clock period to 20 ns (50 MHz)
+    tb.clk.value = 0
+    tb.ui_in.value = 0x00
+    tb.uio_in.value = 0x00
 
-    # Reset
-    dut._log.info("Reset")
-    dut.ena.value = 1
-    dut.ui_in.value = 0
-    dut.uio_in.value = 0
-    dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 10)
-    dut.rst_n.value = 1
+    Clock(tb.clk, 20, "ns").start()    
+    cocotb.start_soon(give_values(tb))
 
-    dut._log.info("Test project behavior")
 
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
+    test = [0x55,0xA3, 0x00, 0xFF, 0x01]
 
-    # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
+    for k in range(len(test)):    
+        result=0
 
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    assert dut.uo_out.value == 50
+        await FallingEdge(tb.tx)
+        await Timer(BIT_CYCLE//2, unit="ns")
+        assert tb.tx.value==0, f"out= {int(tb.tx.value)}"
+        for i in range(8):
+            
+            await Timer(BIT_CYCLE, unit="ns")
+            result += (int(tb.tx.value)*(2**i))
+            tb._log.info(f"Reçu {int(tb.tx.value)}")
 
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
+        assert result == test[k], f"reçu {result:#04x}, attendu {test[k]:#04x}"
+        
+        await Timer(BIT_CYCLE, unit="ns")
+        assert tb.tx.value==1, f"out= {int(tb.tx.value)}"
+
+
+
+
+
+async def give_values(tb):
+
+    tb.rst_n.value = 0
+    tb.ena.value = 1
+    await Timer(25, unit='ns')
+    tb.rst_n.value = 1
+
+
+    test = [0x55,0xA3, 0x00, 0xFF, 0x01]
+    for k in range(len(test)):
+        await FallingEdge(tb.busy)
+        tb.uio_in.value = 1
+        tb.ui_in.value = test[k]
+        await Timer(25, unit="ns")
+        tb.uio_in.value = 0
