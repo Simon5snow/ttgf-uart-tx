@@ -3,7 +3,7 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, Timer, FallingEdge
+from cocotb.triggers import RisingEdge, Timer, FallingEdge, ClockCycles
 
 BAUD_RATE = 115200
 BIT_CYCLE = int(1e9//BAUD_RATE)
@@ -45,6 +45,10 @@ async def test_project(tb):
         await Timer(BIT_CYCLE, unit="ns")
         assert tb.tx.value==1, f"out= {int(tb.tx.value)}"
 
+        await FallingEdge(tb.busy)
+        await ClockCycles(signal=tb.clk, num_cycles=4, rising=False )
+
+        assert tb.busy.value==0, "Trame non demandé"
 
 
 
@@ -64,7 +68,7 @@ async def give_values(tb):
         await FallingEdge(tb.clk)
         
         tb.ui_in.value = test[k]
-        await Timer(BIT_CYCLE//2, unit="ns")
+        await ClockCycles(signal=tb.clk, num_cycles=100, rising=False )
         tb.uio_in.value = 1
         await RisingEdge(tb.busy)
         tb.uio_in.value = 0

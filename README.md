@@ -46,5 +46,5 @@ The GitHub action will automatically build the ASIC files using [LibreLane](http
 
 - utilisation rate : 7.664%
 - number of standard cells : 147
-- total capicity : around 1900 standard cell
-Source : commit 09de2fffa298a198263019e9fb347319d385c632
+- total surface : 54 400 µm²
+- Source : commit 09de2fffa298a198263019e9fb347319d385c632 and https://app.tinytapeout.com/prepurchase?shuttle=ttgf26d 
