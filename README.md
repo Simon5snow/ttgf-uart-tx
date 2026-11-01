@@ -40,3 +40,11 @@ The GitHub action will automatically build the ASIC files using [LibreLane](http
   - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
   - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
   - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+
+
+## Build specs so far.
+
+- utilisation rate : 7.664%
+- number of standard cells : 147
+- total capicity : around 1900 standard cell
+Source : commit 09de2fffa298a198263019e9fb347319d385c632
