@@ -15,18 +15,16 @@ module tt_um_Simon5snow (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-  wire rst, old_busy;
+  wire rst;
   assign rst=~rst_n;
 
-  uart_tx uart1(.clk(clk), .rst(rst), .data(ui_in), .send(uio_in[0]), .tx(uo_out[0]), .busy(old_busy) );
+  core core1(.clk(clk), .rst(rst), .loading(uio_in[6]), .strobe(uio_in[5]), .instr_to_load({ui_in, uio_in[4:0]}), .tx(uo_out[0]));
 
   assign uio_oe=8'b00000000;
-  assign uo_out[7:2]=6'b000000;
+  assign uo_out[7:1]=7'b0000000;
   assign uio_out=8'h00;
 
-  assign uo_out[1]=old_busy;
-
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, uio_in[7:1], 1'b0};
+  wire _unused = &{ena, uio_in[7], 1'b0};
 
 endmodule
