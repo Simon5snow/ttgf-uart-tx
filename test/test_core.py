@@ -97,7 +97,7 @@ async def test_timing(tb): ##test timing regarde si la transition est correcte l
     t_debut = get_sim_time(unit="ps")
     while True:
         await ValueChange(tb.tx)
-        assert ((get_sim_time(unit="ps")-t_debut))%(434*PERIOD_CLOCK_ps)==0, f"BAD TIMING, erreur dans la trame {((get_sim_time(unit="ps")-t_debut)/PERIOD_CLOCK_ps)//4340+1} bit {((((get_sim_time(unit="ps")-t_debut)/PERIOD_CLOCK_ps)%4340)//434)} counter {(get_sim_time(unit="ps")-t_debut)}"
+        assert ((get_sim_time(unit="ps")-t_debut))%(434*PERIOD_CLOCK_ps)==0, f'BAD TIMING, erreur dans la trame {((get_sim_time(unit="ps")-t_debut)/PERIOD_CLOCK_ps)//4340+1} bit {((((get_sim_time(unit="ps")-t_debut)/PERIOD_CLOCK_ps)%4340)//434)} counter {(get_sim_time(unit="ps")-t_debut)}'
 
 async def receive_value(tb, o_to_send):
     
@@ -145,4 +145,4 @@ async def load_imem(tb, mots, rst_n=True):
     tb.loading.value = 0
     start = get_sim_time(unit="ps")
     await FallingEdge(tb.tx)
-    assert 2<=(get_sim_time(unit="ps")-start)/PERIOD_CLOCK_ps<=3, f"L'écart est {(get_sim_time(unit="ps")-start)/PERIOD_CLOCK_ps} c'est en dehors des bornes"
+    assert 2<=(get_sim_time(unit="ps")-start)/PERIOD_CLOCK_ps<=3, f'Lecart est {(get_sim_time(unit="ps")-start)/PERIOD_CLOCK_ps} est en dehors des bornes '
