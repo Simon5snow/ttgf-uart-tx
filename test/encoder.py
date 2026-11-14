@@ -4,7 +4,7 @@ dico_instruction = {"jmp" : "2'b01", "set" : "2'b11", "out" : "2'b10"}
 dico_register = {"tx":(1, "2'b11"), "n":(9, "2'b10"), "osr":(8, "2'b00"), "x":(3, "2'b01")}
 
 def generate_param():
-    with open(Path(__file__).resolve().parent / "param.vh", 'w') as f:
+    with open(Path(__file__).resolve().parent.parent / "src" / "param.vh", 'w') as f:
         for instr,value in dico_instruction.items():
             f.write(f"localparam {instr} = {value};\n")
         
