@@ -18,7 +18,7 @@ module tt_um_Simon5snow (
   wire rst;
   assign rst=~rst_n;
 
-  core core1(.clk(clk), .rst(rst), .loading(uio_in[6]), .strobe(uio_in[5]), .instr_to_load({ui_in, uio_in[4:0]}), .tx(uo_out[0]));
+  core core1(.clk(clk), .rst(rst), .loading(uio_in[6]), .strobe(uio_in[5]), .instr_to_load({uio_in[4:0], ui_in}), .tx(uo_out[0]));
 
   assign uio_oe=8'b00000000;
   assign uo_out[7:1]=7'b0000000;

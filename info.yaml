@@ -19,7 +19,6 @@ project:
   source_files:
     - "project.v"
     - "core.v"
-    - "param.vh"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
@@ -50,8 +49,8 @@ pinout:
   uio[2]: "bit_instruction[10]" #input
   uio[3]: "bit_instruction[11]" #input
   uio[4]: "bit_instruction[12]" #input
-  uio[5]: "loading" #input
-  uio[6]: "strobe" #input
+  uio[5]: "strobe" #input
+  uio[6]: "loading" #input
   uio[7]: ""
 
 # Do not change!
