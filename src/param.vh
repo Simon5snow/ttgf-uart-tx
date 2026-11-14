@@ -1,4 +1,4 @@
-localparam jmp = 2'b01;
+localparam jmp = 2'b00;
 localparam set = 2'b11;
 localparam out = 2'b10;
 localparam adress_tx = 2'b11;
