@@ -17,8 +17,8 @@ module tb ();
   reg clk;
   reg rst_n;
   reg ena;
-  reg [7:0] ui_in;
-  reg [7:0] uio_in;
+  wire [7:0] ui_in;
+  wire [7:0] uio_in;
   wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
@@ -27,9 +27,16 @@ module tb ();
   wire VGND = 1'b0;
 `endif
 
-wire tx, busy;
+wire tx;
+reg [12:0] instr_to_load;
+reg strobe, loading;
+
+assign {uio_in[4:0],ui_in}=instr_to_load;
+assign uio_in[7]=1'b1;
+
+assign uio_in[5]=strobe;
+assign uio_in[6]=loading;
 assign tx=uo_out[0];
-assign busy=uo_out[1];
 
   // Replace tt_um_example with your module name:
   tt_um_Simon5snow user_project (

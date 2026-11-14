@@ -11,17 +11,18 @@ def test_uart_runner():
 
     proj_path = Path(__file__).resolve().parent
 
-    sources = [proj_path / "../src/project.v", "../src/uart_tx.v", ".../tb.v"]
+    sources = [proj_path / "../src/project.v", "../src/core.v", ".../tb.v"]
 
 
     runner = get_runner(sim)
     runner.build(
         sources=sources,
         hdl_toplevel="tb",
+        includes=[proj_path.parent / "src"],
         always=True,
     )
 
-    runner_test = runner.test(hdl_toplevel="tb", test_module="test", waves=True)
+    runner_test = runner.test(hdl_toplevel="tb", test_module="test_core", waves=True)
 
 
     if get_results(runner_test)[1]>0:
