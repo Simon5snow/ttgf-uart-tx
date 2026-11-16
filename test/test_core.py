@@ -123,6 +123,8 @@ async def receive_value(tb, o_to_send):
         assert res==test_length, f"erreur de timing sur le bit final, trame {k+1}"
 
 async def load_imem(tb, mots, rst_n=True):
+    tb.strobe.value = 0
+    tb.loading.value = 0
 
     if rst_n:
         await FallingEdge(tb.clk)

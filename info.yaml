@@ -1,6 +1,6 @@
 # Tiny Tapeout project information
 project:
-  title:        "UART transmitter"      # Project title
+  title:        "Small core"      # Project title
   author:       "Simon Perrin"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "Small core with 32 adress for instruction memory of 13 bits for each instruction transmitter that works at 50MHz. The only instruction possible are SET, JMP and OUT"      # One line description of what your project does
