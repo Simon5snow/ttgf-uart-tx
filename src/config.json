@@ -27,6 +27,11 @@
   "RUN_LINTER": 1,
   "LINTER_INCLUDE_PDK_MODELS": 1,
 
+
+  "//": "",
+  "DESIGN_REPAIR_MAX_SLEW_PCT": 0,
+  "DESIGN_REPAIR_MAX_CAP_PCT": 0,
+
   "//": "MAP a cell to a latch so I can use less area by replacing the FF by latches",
   "SYNTH_LATCH_MAP": "dir::latch_map.v",
 
