@@ -13,7 +13,7 @@
 
   "//": "PL_TARGET_DENSITY_PCT - You can increase this if Global Placement fails with error GPL-0302.",
   "//": "Users have reported that values up to 80 worked well for them.",
-  "PL_TARGET_DENSITY_PCT": 0.7471,
+  "PL_TARGET_DENSITY_PCT": 68,
 
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
   "//": "The value is in nanoseconds, so 20ns == 50MHz.",
@@ -28,7 +28,7 @@
   "LINTER_INCLUDE_PDK_MODELS": 1,
 
 
-  "//": "",
+  "//": "Baisse de marges pour les upsize à cause du slew ou de la capacitance",
   "DESIGN_REPAIR_MAX_SLEW_PCT": 0,
   "DESIGN_REPAIR_MAX_CAP_PCT": 0,
 

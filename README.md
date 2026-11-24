@@ -44,8 +44,8 @@ The GitHub action will automatically build the ASIC files using [LibreLane](http
 
 ## Build specs so far.
 
-- utilisation rate : 7.664%
-- number of standard cells : 147
-- total surface : 54 400 µm²
-- Source : commit 09de2fffa298a198263019e9fb347319d385c632 and https://app.tinytapeout.com/prepurchase?shuttle=ttgf26d
-- No white box testing, I only tested through the actual pin. 
+- utilisation rate : 81.3% (rate of moving cell over (42187.35 um²) the free area (50439 um² excluding the fill cell etc..) )
+- number of standard cells : 1683
+- total area : 51 000 µm²
+- Main cells : 416 latq, 38 FF
+- No white box testing, I only tested through the actual pin, hence we cannot catch bug that didn't change the output (tx). 
