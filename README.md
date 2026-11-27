@@ -44,8 +44,9 @@ The GitHub action will automatically build the ASIC files using [LibreLane](http
 
 ## Build specs so far.
 
-- utilisation rate : 81.3% (rate of moving cell over (42187.35 um²) the free area (50439 um² excluding the fill cell etc..) )
+- utilisation rate : 78.32% (rate of moving cell over (39504.82 um²) the free area (50439 um² excluding the fill cell etc..) )
 - number of standard cells : 1683
 - total area : 51 000 µm²
 - Main cells : 416 latq, 38 FF
+- WNS ss: 2.5697ns
 - No white box testing, I only tested through the actual pin, hence we cannot catch bug that didn't change the output (tx). 
