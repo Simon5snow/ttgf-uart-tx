@@ -43,8 +43,9 @@
 
 
   "//": "Baisse de marges pour les upsize à cause du slew ou de la capacitance",
-  "DESIGN_REPAIR_MAX_SLEW_PCT": 20,
+  "DESIGN_REPAIR_MAX_SLEW_PCT": 0,
   "DESIGN_REPAIR_MAX_CAP_PCT": 0,
+  "RUN_POST_GRT_DESIGN_REPAIR": true,
 
   "//": "MAP a cell to a latch so I can use less area by replacing the FF by latches",
   "SYNTH_LATCH_MAP": "dir::latch_map.v",
